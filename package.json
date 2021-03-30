@@ -50,6 +50,7 @@
     "nyc": "^14.1.1"
   },
   "publishConfig": {
+    "cache": "~/.npm",
     "registry": "http://nexus.cryptopian.io:8081/repository/npm-hosted/"
   }
 }
