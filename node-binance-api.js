@@ -4066,6 +4066,10 @@ let api = function Binance( options = {} ) {
 
         futuresOrder, // side symbol quantity [price] [params]
 
+        futuresBatchOrders: async (params) => {
+            return promiseRequest( 'v1/batchOrders', params, { base:fapi, type:'SIGNED' } );
+        },
+
         futuresOrderStatus: async ( symbol, params = {} ) => { // Either orderId or origClientOrderId must be sent
             params.symbol = symbol;
             return promiseRequest( 'v1/order', params, { base:fapi, type:'SIGNED' } );
@@ -4079,6 +4083,10 @@ let api = function Binance( options = {} ) {
         futuresCancelAll: async ( symbol, params = {} ) => {
             params.symbol = symbol;
             return promiseRequest( 'v1/allOpenOrders', params, { base:fapi, type:'SIGNED', method:'DELETE' } );
+        },
+
+        futuresCancelBatch: async (params) => {
+            return promiseRequest( 'v1/batchOrders', params, { base:fapi, type:'SIGNED', method:'DELETE' } );
         },
 
         futuresCountdownCancelAll: async ( symbol, countdownTime = 0, params = {} ) => {
@@ -4121,7 +4129,6 @@ let api = function Binance( options = {} ) {
 
         // futures websockets support: ticker bookTicker miniTicker aggTrade markPrice
         /* TODO: https://binance-docs.github.io/apidocs/futures/en/#change-log
-        Cancel multiple orders DELETE /fapi/v1/batchOrders
         New Future Account Transfer POST https://api.binance.com/sapi/v1/futures/transfer
         Get Postion Margin Change History (TRADE)
 
@@ -4341,6 +4348,10 @@ let api = function Binance( options = {} ) {
 
         deliveryOrder, // side symbol quantity [price] [params]
 
+        deliveryBatchOrders: async (params) => {
+            return promiseRequest( 'v1/batchOrders', params, { base:dapi, type:'SIGNED' } );
+        },
+
         deliveryOrderStatus: async ( symbol, params = {} ) => { // Either orderId or origClientOrderId must be sent
             params.symbol = symbol;
             return promiseRequest( 'v1/order', params, { base:dapi, type:'SIGNED' } );
@@ -4354,6 +4365,10 @@ let api = function Binance( options = {} ) {
         deliveryCancelAll: async ( symbol, params = {} ) => {
             params.symbol = symbol;
             return promiseRequest( 'v1/allOpenOrders', params, { base:dapi, type:'SIGNED', method:'DELETE' } );
+        },
+
+        deliveryCancelBatch: async (params) => {
+            return promiseRequest( 'v1/batchOrders', params, { base:dapi, type:'SIGNED', method:'DELETE' } );
         },
 
         deliveryCountdownCancelAll: async ( symbol, countdownTime = 0, params = {} ) => {
