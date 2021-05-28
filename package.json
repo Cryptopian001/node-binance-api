@@ -1,6 +1,6 @@
 {
   "name": "@cryptopian/node-binance-api",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Binance API for node https://github.com/jaggedsoft/node-binance-api",
   "main": "node-binance-api.js",
   "dependencies": {

@@ -545,6 +545,7 @@ let api = function Binance( options = {} ) {
                 data.signature = crypto.createHmac( 'sha256', Binance.options.APISECRET ).update( query ).digest( 'hex' ); // HMAC hash header
                 opt.url = `${ baseURL }${ url }?${ query }&signature=${ data.signature }`;
             }
+            console.log(opt.url)
             opt.qs = data;
             /*if ( flags.method === 'POST' ) {
                 opt.form = data;
@@ -570,7 +571,7 @@ let api = function Binance( options = {} ) {
                         }
                         return reject( response );
                     } catch ( err ) {
-                        return reject( `promiseRequest error #${ response.statusCode }` );
+                        return reject( `promiseRequest error #${ response.statusCode }: ${JSONbig.stringify(err)}` );
                     }
                 } ).on( 'error', reject );
             } catch ( err ) {
@@ -4067,7 +4068,8 @@ let api = function Binance( options = {} ) {
         futuresOrder, // side symbol quantity [price] [params]
 
         futuresBatchOrders: async (params) => {
-            return promiseRequest( 'v1/batchOrders', params, { base:fapi, type:'SIGNED' } );
+            params.batchOrders = JSONbig.stringify(params.batchOrders)
+            return promiseRequest( 'v1/batchOrders', params, { base:fapi, type:'SIGNED', method: 'POST' } );
         },
 
         futuresOrderStatus: async ( symbol, params = {} ) => { // Either orderId or origClientOrderId must be sent
@@ -4086,6 +4088,8 @@ let api = function Binance( options = {} ) {
         },
 
         futuresCancelBatch: async (params) => {
+            params.orderIdList = JSONbig.stringify(params.orderIdList)
+            params.origClientOrderIdList = JSONbig.stringify(params.origClientOrderIdList)
             return promiseRequest( 'v1/batchOrders', params, { base:fapi, type:'SIGNED', method:'DELETE' } );
         },
 
