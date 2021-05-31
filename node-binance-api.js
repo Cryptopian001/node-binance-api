@@ -545,7 +545,6 @@ let api = function Binance( options = {} ) {
                 data.signature = crypto.createHmac( 'sha256', Binance.options.APISECRET ).update( query ).digest( 'hex' ); // HMAC hash header
                 opt.url = `${ baseURL }${ url }?${ query }&signature=${ data.signature }`;
             }
-            console.log(opt.url)
             opt.qs = data;
             /*if ( flags.method === 'POST' ) {
                 opt.form = data;

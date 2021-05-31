@@ -14,7 +14,10 @@ async function placeOrders() {
 	let order = await binance.futuresBatchOrders({
 		batchOrders: [
 			{ side: 'BUY', symbol: 'BTCUSDT', type: 'LIMIT', quantity: '0.001', price: '30000', timeInForce: 'GTC', positionSide: 'LONG' },
-			{ side: 'BUY', symbol: 'BTCUSDT', type: 'LIMIT', quantity: '0.001', price: '30001', timeInForce: 'GTC', positionSide: 'LONG' }
+			{ side: 'BUY', symbol: 'BTCUSDT', type: 'LIMIT', quantity: '0.001', price: '30001', timeInForce: 'GTC', positionSide: 'LONG' },
+			{ side: 'BUY', symbol: 'BTCUSDT', type: 'LIMIT', quantity: '0.001', price: '30002', timeInForce: 'GTC', positionSide: 'LONG' },
+			{ side: 'BUY', symbol: 'BTCUSDT', type: 'LIMIT', quantity: '0.001', price: '30003', timeInForce: 'GTC', positionSide: 'LONG' },
+			{ side: 'BUY', symbol: 'BTCUSDT', type: 'LIMIT', quantity: '0.001', price: '30004', timeInForce: 'GTC', positionSide: 'LONG' },
 		]
 	});
 	console.log('PLACE ORDERS:', order);
@@ -33,7 +36,7 @@ async function cancelOpenOrders() {
 }
 
 async function main() {
-	await cancelOpenOrders();
+	await placeOrders();
 }
 
 main().catch(err => console.error(err))
