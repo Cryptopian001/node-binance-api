@@ -4020,7 +4020,7 @@ let api = function Binance( options = {} ) {
 
         futuresOrder, // side symbol quantity [price] [params]
 
-        futuresBatchOrders: async (params) => {
+        futuresBatchOrders: async (params) => { // { batchOrders }
             params.batchOrders = JSONbig.stringify(params.batchOrders)
             return promiseRequest( 'v1/batchOrders', params, { base:fapi, type:'SIGNED', method: 'POST' } );
         },
@@ -4040,9 +4040,11 @@ let api = function Binance( options = {} ) {
             return promiseRequest( 'v1/allOpenOrders', params, { base:fapi, type:'SIGNED', method:'DELETE' } );
         },
 
-        futuresCancelBatch: async (params) => {
-            params.orderIdList = JSONbig.stringify(params.orderIdList)
-            params.origClientOrderIdList = JSONbig.stringify(params.origClientOrderIdList)
+        futuresCancelBatch: async (params) => { // { symbol, orderIdList, origClientOrderIdList }
+            if (params.orderIdList)
+                params.orderIdList = JSONbig.stringify(params.orderIdList)
+            if (params.origClientOrderIdList)
+                params.origClientOrderIdList = JSONbig.stringify(params.origClientOrderIdList)
             return promiseRequest( 'v1/batchOrders', params, { base:fapi, type:'SIGNED', method:'DELETE' } );
         },
 
@@ -4305,8 +4307,9 @@ let api = function Binance( options = {} ) {
 
         deliveryOrder, // side symbol quantity [price] [params]
 
-        deliveryBatchOrders: async (params) => {
-            return promiseRequest( 'v1/batchOrders', params, { base:dapi, type:'SIGNED' } );
+        deliveryBatchOrders: async (params) => { // { batchOrders }
+            params.batchOrders = JSONbig.stringify(params.batchOrders)
+            return promiseRequest( 'v1/batchOrders', params, { base:dapi, type:'SIGNED', method: 'POST' } );
         },
 
         deliveryOrderStatus: async ( symbol, params = {} ) => { // Either orderId or origClientOrderId must be sent
@@ -4324,7 +4327,11 @@ let api = function Binance( options = {} ) {
             return promiseRequest( 'v1/allOpenOrders', params, { base:dapi, type:'SIGNED', method:'DELETE' } );
         },
 
-        deliveryCancelBatch: async (params) => {
+        deliveryCancelBatch: async (params) => { // { symbol, orderIdList, origClientOrderIdList }
+            if (params.orderIdList)
+                params.orderIdList = JSONbig.stringify(params.orderIdList)
+            if (params.origClientOrderIdList)
+                params.origClientOrderIdList = JSONbig.stringify(params.origClientOrderIdList)
             return promiseRequest( 'v1/batchOrders', params, { base:dapi, type:'SIGNED', method:'DELETE' } );
         },
 
