@@ -2959,12 +2959,12 @@ let api = function Binance( options = {} ) {
                         }
                     }
                     signedRequest( base + 'v3/order', params, function ( error, data ) {
-                        return callback.call( this, error, data, symbol );
+                        return callback.call( this, error, data, params.symbol );
                     }, 'DELETE' );
                 } )
             } else {
                 signedRequest( base + 'v3/order', params, function ( error, data ) {
-                    return callback.call( this, error, data, symbol );
+                    return callback.call( this, error, data, params.symbol );
                 }, 'DELETE' );
             }
         },
