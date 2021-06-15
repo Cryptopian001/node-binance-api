@@ -2050,8 +2050,9 @@ let api = function Binance( options = {} ) {
      */
     const userDataHandler = data => {
         let type = data.e;
-        if ( type === 'outboundAccountInfo' ) {
-            // XXX: Deprecated in 2020-09-08
+        if ( type === 'balanceUpdate' ) {
+            // Previously 'outboundAccountInfo'. Deprecated in 2020-09-08
+            if ( Binance.options.balance_update_callback ) Binance.options.balance_update_callback( data );
         } else if ( type === 'executionReport' ) {
             if ( Binance.options.execution_callback ) Binance.options.execution_callback( data );
         } else if ( type === 'listStatus' ) {
@@ -5182,9 +5183,9 @@ let api = function Binance( options = {} ) {
              * @param {function} list_status_callback - status callback
              * @return {undefined}
              */
-            userData: function userData( callback, execution_callback = false, subscribed_callback = false, list_status_callback = false ) {
+            userData: function userData( callback, execution_callback = false, subscribed_callback = false, list_status_callback = false, balance_update_callback = false ) {
                 let reconnect = () => {
-                    if ( Binance.options.reconnect ) userData( callback, execution_callback, subscribed_callback );
+                    if ( Binance.options.reconnect ) userData( callback, execution_callback, subscribed_callback, list_status_callback, balance_update_callback );
                 };
                 apiRequest( base + 'v3/userDataStream', {}, function ( error, response ) {
                     Binance.options.listenKey = response.listenKey;
@@ -5201,6 +5202,7 @@ let api = function Binance( options = {} ) {
                     Binance.options.balance_callback = callback;
                     Binance.options.execution_callback = execution_callback;
                     Binance.options.list_status_callback = list_status_callback;
+                    Binance.options.balance_update_callback = balance_update_callback
                     const subscription = subscribe( Binance.options.listenKey, userDataHandler, reconnect );
                     if ( subscribed_callback ) subscribed_callback( subscription.endpoint );
                 }, 'POST' );
