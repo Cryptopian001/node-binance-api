@@ -39,7 +39,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-counter": "^1.0.0",
-    "codacy-coverage": "^3.4.0",
+    "codacy-coverage": "^3.2.0",
     "codecov": "^3.6.1",
     "coveralls": "^3.0.7",
     "eslint": "^6.6.0",
